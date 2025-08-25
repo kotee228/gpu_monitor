@@ -5,4 +5,4 @@
 ## Быстрая установка
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/ваш-аккаунт/репозиторий/main/install.sh)
+bash <(curl -s https://raw.githubusercontent.com/kotee228/gpu_monitor/main/install.sh)
