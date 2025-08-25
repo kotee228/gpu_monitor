@@ -18,7 +18,8 @@ screen -S gpu_monitor -dm bash -c 'cd /hive/python_scripts/gpu_monitor && source
 ================================================
 
 ⚙️  ДОПОЛНИТЕЛЬНО:
- cd /hive/python_scripts/gpu_monitor • Перейти в папку скрипта
+```bash
+cd /hive/python_scripts/gpu_monitor``` • Перейти в папку скрипта
 nano gpu_monitor.py          • Редактировать настройки скрипта
 
 🎯 ОСНОВНЫЕ КОМАНДЫ SCREEN:
