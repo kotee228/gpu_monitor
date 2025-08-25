@@ -68,4 +68,4 @@ nano gpu_monitor.py
   GPU индекс:       0
 
 Для изменения настроек отредактируйте:
-** /hive/python_scripts/gpu_monitor/gpu_monitor.py"**
+/hive/python_scripts/gpu_monitor/gpu_monitor.py
