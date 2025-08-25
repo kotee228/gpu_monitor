@@ -31,7 +31,6 @@ nano gpu_monitor.py
 ```bash
   screen -S gpu_monitor
 ```
-```bash  
   • Список всех сессий
 ```bash
   screen -ls
