@@ -64,8 +64,11 @@ nano gpu_monitor.py
 
 Настройки по умолчанию:
   Проверка каждые: 60 сек
+  
   Порог мощности:   100W
+  
   GPU индекс:       0
 
 Для изменения настроек отредактируйте:
+
 /hive/python_scripts/gpu_monitor/gpu_monitor.py
