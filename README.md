@@ -13,7 +13,6 @@ bash <(curl -s https://raw.githubusercontent.com/kotee228/gpu_monitor/main/insta
 screen -S gpu_monitor -dm bash -c 'cd /hive/python_scripts/gpu_monitor && source venv/bin/activate && python gpu_monitor.py'
 ```
 
-Доп памятка:
 📋 КОМАНДЫ ДЛЯ УПРАВЛЕНИЯ И МОНИТОРИНГА:
 ================================================
 
@@ -28,10 +27,23 @@ nano gpu_monitor.py
 ```
 
 🎯 ОСНОВНЫЕ КОМАНДЫ SCREEN:
-  screen -S gpu_monitor        • Создать сессию
-  screen -ls                   • Список всех сессий
-  screen -r gpu_monitor        • Подключиться к сессии
-  screen -XS gpu_monitor quit  • Остановить сессию
+  • Создать сессию
+```bash
+  screen -S gpu_monitor
+```
+```bash  
+  • Список всех сессий
+```bash
+  screen -ls
+```   
+  • Подключиться к сессии
+```bash
+  screen -r gpu_monitor
+```     
+  • Остановить сессию
+```bash
+  screen -XS gpu_monitor quit
+```
 
 📊 МОНИТОРИНГ ЛОГОВ В РЕАЛЬНОМ ВРЕМЕНИ:
   • В log_status.txt все логи (новые сверху)
