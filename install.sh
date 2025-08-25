@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # install.sh - Автоматическая установка GPU монитора для Hive OS
-# Запуск: bash <(curl -s https://raw.githubusercontent.com/ваш-аккаунт/репозиторий/main/install.sh)
+# Запуск: bash <(curl -s https://raw.githubusercontent.com/kotee228/gpu_monitor/main/install.sh)
 
 set -e  # Прерывать выполнение при ошибках
 
@@ -30,7 +30,7 @@ echo "✓ Виртуальное окружение создано"
 echo "[4/5] Загрузка и настройка скрипта..."
 
 # Скачиваем скрипт с GitHub
-curl -s -o gpu_monitor.py https://raw.githubusercontent.com/ваш-аккаунт/репозиторий/main/gpu_monitor.py
+curl -s -o gpu_monitor.py https://raw.githubusercontent.com/kotee228/gpu_monitor/main/gpu_monitor.py
 
 # Делаем скрипт исполняемым
 chmod +x gpu_monitor.py
