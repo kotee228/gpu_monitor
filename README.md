@@ -12,3 +12,5 @@ bash <(curl -s https://raw.githubusercontent.com/kotee228/gpu_monitor/main/insta
 ```bash
 screen -S gpu_monitor -dm bash -c 'cd /hive/python_scripts/gpu_monitor && source venv/bin/activate && python gpu_monitor.py'
 ```
+
+Доп памятка:
