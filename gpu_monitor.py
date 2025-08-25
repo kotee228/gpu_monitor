@@ -62,17 +62,68 @@ def restart_miner():
         reverse_append(LOG_STATUS, restart_msg)
         reverse_append(LOG_RESTART, restart_msg)
         
-        subprocess.run(["miner", "restart"], check=True)
+        # Пробуем несколько раз выполнить команду
+        max_attempts = 3
+        for attempt in range(max_attempts):
+            try:
+                result = subprocess.run(
+                    ["miner", "restart"], 
+                    capture_output=True, 
+                    text=True, 
+                    timeout=30,
+                    check=True
+                )
+                
+                # Если команда выполнена успешно
+                success_msg = f"Майнер успешно перезапущен (попытка {attempt + 1})"
+                print_with_time(success_msg)
+                reverse_append(LOG_STATUS, success_msg)
+                reverse_append(LOG_RESTART, success_msg)
+                
+                # Выводим stdout и stderr для отладки
+                if result.stdout:
+                    print_with_time(f"STDOUT: {result.stdout.strip()}")
+                if result.stderr:
+                    print_with_time(f"STDERR: {result.stderr.strip()}")
+                
+                return True
+                
+            except subprocess.TimeoutExpired:
+                error_msg = f"Таймаут при перезапуске майнера (попытка {attempt + 1})"
+                print_with_time(error_msg)
+                reverse_append(LOG_STATUS, error_msg)
+                if attempt < max_attempts - 1:
+                    time.sleep(5)
+                continue
+                
+            except subprocess.CalledProcessError as e:
+                error_msg = f"Ошибка при перезапуске майнера (попытка {attempt + 1}): exit code {e.returncode}"
+                print_with_time(error_msg)
+                reverse_append(LOG_STATUS, error_msg)
+                
+                # Выводим stderr для отладки
+                if e.stderr:
+                    print_with_time(f"STDERR: {e.stderr.strip()}")
+                if e.stdout:
+                    print_with_time(f"STDOUT: {e.stdout.strip()}")
+                
+                if attempt < max_attempts - 1:
+                    time.sleep(5)
+                continue
         
-        success_msg = "Майнер успешно перезапущен"
-        print_with_time(success_msg)
-        reverse_append(LOG_STATUS, success_msg)
-        reverse_append(LOG_RESTART, success_msg)
+        # Если все попытки неудачны
+        final_error = "Все попытки перезапуска майнера завершились ошибкой"
+        print_with_time(final_error)
+        reverse_append(LOG_STATUS, final_error)
+        reverse_append(LOG_RESTART, final_error)
+        return False
+            
     except Exception as e:
-        error_msg = f"Ошибка при перезапуске майнера: {e}"
+        error_msg = f"Критическая ошибка при перезапуске майнера: {e}"
         print_with_time(error_msg)
         reverse_append(LOG_STATUS, error_msg)
         reverse_append(LOG_RESTART, error_msg)
+        return False
 
 def main():
     """Основная функция мониторинга с улучшенной логикой"""
@@ -125,9 +176,9 @@ def main():
                         
                         # Если подтвердилось - перезапускаем
                         if confirm_power < POWER_THRESHOLD:
-                            restart_miner()
-                            # Пауза после перезапуска
-                            time.sleep(CHECK_INTERVAL)
+                            restart_success = restart_miner()
+                            # Увеличиваем паузу после перезапуска
+                            time.sleep(CHECK_INTERVAL * 2)
                         else:
                             recovery_msg = "Мощность восстановилась, перезапуск отменен"
                             print_with_time(recovery_msg)
@@ -158,6 +209,7 @@ def main():
 
 if __name__ == "__main__":
     # Создаем пустые лог-файлы при первом запуске
+    os.makedirs('/hive/python_scripts/gpu_monitor', exist_ok=True)
     if not os.path.exists(LOG_STATUS):
         with open(LOG_STATUS, 'w') as f: pass
     if not os.path.exists(LOG_RESTART):
